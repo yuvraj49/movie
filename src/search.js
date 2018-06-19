@@ -76,7 +76,7 @@ class Search extends Component {
 
 
 	apiCall = () => {
-		fetch(`http://www.omdbapi.com/?apikey=43bca0a4&y=${this.state.year}&type=${this.state.type}&t=${this.state.title}`)
+		fetch(`https://www.omdbapi.com/?apikey=43bca0a4&y=${this.state.year}&type=${this.state.type}&t=${this.state.title}`)
     .then(results => {
       return results.json()
     })
