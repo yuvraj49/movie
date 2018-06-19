@@ -67,13 +67,11 @@ class Search extends Component {
 
 	handleKeyUp = name => e => {
 
-		
 		this.setState({
       [name]: e.target.value,
     });
 		console.log(this.state)
 	}
-
 
 	apiCall = () => {
 		fetch(`https://www.omdbapi.com/?apikey=43bca0a4&y=${this.state.year}&type=${this.state.type}&t=${this.state.title}`)
@@ -88,6 +86,7 @@ class Search extends Component {
     		fiveMovies = ''
     	}else{
     		this.setState({results: data.Title})
+    		
     		fiveMovies = ''
     		this.setState({response: ''})
     		this.setState(prevState => ({
@@ -95,10 +94,6 @@ class Search extends Component {
 	  }))
     	}
       
-
-      
-
-      // this.setState({refinedDetails: data})
     })
     .catch(function() {
         console.log("error");
@@ -111,7 +106,14 @@ class Search extends Component {
 
 	handleClickForFive =e => {
 
-		let data = this.state.dataResults.map((data) => {
+
+
+
+		let data = this.state.dataResults.filter(function(item, pos){
+  			return arr.indexOf(item)== pos; 
+		})
+
+		let data = data.map((data) => {
 			return data
 		})
 
@@ -134,18 +136,11 @@ class Search extends Component {
 	render() {
 
 		const { classes } = this.props;
-		
-
-
 
 		return (
 
-<div className="App">
-      	<div>
-
-
-
-
+		<div className="App">
+      		<div>
       	
       		<form className={classes.container} noValidate autoComplete="off">
 
@@ -192,18 +187,14 @@ class Search extends Component {
       		<List component="nav">
       	<ListItem button>
           
-          <ListItemText primary={this.state.results} />
+          <ListItemText primary={this.state.results  } />
         </ListItem>
               	<ListItem button>
           
           <ListItemText primary={this.state.response} />
         </ListItem>
         </List>
-      	
-
-      	
-
-      	
+      	 	
         </div>
     	);
     }
