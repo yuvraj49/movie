@@ -60,7 +60,7 @@ class Search extends Component {
 			results: '',
 			dataResults: [],
 			response: '',
-			openRes: 1
+			responseObject: []
 		}
 
 	}
@@ -79,14 +79,16 @@ class Search extends Component {
       return results.json()
     })
     .then(data => {
-    	console.log(data)
+    	// console.log(data)
     	if(data.Response === 'False'){
     		this.setState({response: data.Error})
     		this.setState({results: ''})
     		fiveMovies = ''
     	}else{
-    		this.setState({results: data.Title})
-    		
+				this.setState({results: data.Title})
+				this.setState({responseObject: data})
+				console.log(this.state.responseObject)
+
     		fiveMovies = ''
     		this.setState({response: ''})
     		this.setState(prevState => ({
@@ -107,23 +109,17 @@ class Search extends Component {
 	handleClickForFive =e => {
 
 
+		let data = this.state.dataResults;
 
-
-		let data = this.state.dataResults.filter(function(item, pos){
-  			return arr.indexOf(item)== pos; 
-		})
-
-		let data = data.map((data) => {
-			return data
+		data = data.filter(function(item, pos){
+  			return data.indexOf(item)== pos; 
 		})
 
 			
-		console.log(data.slice(Math.max(data.length - 5, 1)))
 		this.setState({dataResults: data})
 		this.setState({results: ''})
 		this.setState({response: ''})
 		localStorage.setItem('res2',JSON.stringify(this.state.dataResults))
-		// console.log()
 
 		 fiveMovies = data.map((data)=>{
       return <ListItemText primary={data} />
@@ -187,9 +183,9 @@ class Search extends Component {
       		<List component="nav">
       	<ListItem button>
           
-          <ListItemText primary={this.state.results  } />
+          <ListItemText primary={this.state.results} />
         </ListItem>
-              	<ListItem button>
+        <ListItem button>
           
           <ListItemText primary={this.state.response} />
         </ListItem>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Search from './search';
+import Display from './Display';
 
 
 const apiKey = '43bca0a4';
@@ -13,8 +14,12 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      dataReturned : [],
-      city : []
+      year: '',
+      type: '',
+      title: '',
+      openSearch: 1,
+      openDisplay: 0,
+      responseObject: []
     }
     
   }
@@ -23,8 +28,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Search />
-        
+        {this.state.openSearch && <Search />}
+        {this.state.openDisplay && <Display />}
+
       </div>
     );
   }
